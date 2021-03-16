@@ -5,7 +5,7 @@ let socket = io();
 
 function handleButtonClick() {
     // console.log("button wurde geklickt");
-    socket.emit('serverEvent', "süd");
+    socket.emit('serverEvent', "ost");
 }
 
 
