@@ -1,11 +1,14 @@
 // Connecting to server. Don't touch this :-) 
 let socket = io();
-
+let readysüd = false
+let readynord = false
+let readyost = false
+let readywest = false
 
 
 function handleButtonClick() {
     // console.log("button wurde geklickt");
-    socket.emit('serverEvent', "ost");
+    socket.emit('serverEvent', "süd");
 }
 
 
@@ -21,26 +24,28 @@ socket.on('serverEvent', function (message) {
 
     if (message == "süd") {
         let y = button1.offsetTop;
-        y = y + 20;
-        button1.style.top = y + "px";
+        let readysüd = true;
     }
 
     if (message == "nord") {
         let y = button1.offsetTop;
-        y = y - 20;
-        button1.style.top = y + "px";
+        let readynord = true;
     }
 
     if (message == "ost") {
         let x = button1.offsetLeft;
-        x = x - 20;
-        button1.style.left = x + "px";
+        let readyost = true;
     }
 
     if (message == "west") {
         let x = button1.offsetLeft;
-        x = x + 20;
-        button1.style.left = x + "px";
+        let readywest = true;
+    }
+
+    if (readysüd === true && readynord === true && readyost === true && readywest === true ) {
+        console.log("funktioniert");
+    
+ 
     }
 
 });
