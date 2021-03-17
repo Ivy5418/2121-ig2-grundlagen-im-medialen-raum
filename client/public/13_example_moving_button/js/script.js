@@ -1,66 +1,79 @@
 // Connecting to server. Don't touch this :-)
 let socket = io();
 
-
 let readysüd = false;
 let readynord = false;
 let readyost = false;
 let readywest = false;
+
+
+
+let colorRow = ["red", "greenyellow", "yellow", "blueviolet", "khaki", "olivedrab", "blue", "indianred"]
+colorRow = shuffle(colorRow);
+
+let colors =  document.getElementsByClassName("color")
+let intervalID;
+let counter = 0;
+
+
+// Abgeschickt
 
 function handleButtonClick() {
   // console.log("button wurde geklickt");
   socket.emit("serverEvent", "ost");
 }
 
-
-let i = ["col1", "col4", "col2", "col3", "col5","col6","col7", "col8"];
-let len = colors.length;
-let colors =  document.getElementsByClassName("color")
-
-
-let intervalID;
-let counter = 0;
-nIntervId = setInterval(i, 1000);
-
-
 function changeColor() {
-    counter++;
-    for (i = 0; i < colors.length; i++){
-        intervalID = window.setInterval(changeColor, 1000);
-    };
-    console.log(counter);
+  console.log(counter);
+  
+  $('#button1').css("background-color", colorRow[counter])
+
+  counter++;
     if (counter > 7) {
         clearInterval(intervalID)
     }
+    socket.emit("serverEvent", "admin");  
 }
+
 
 socket.on("connected", function (msg) {
   console.log(msg);
-});
+
+
 // Incoming events
+
 socket.on("serverEvent", function (message) {
   console.log(message);
 
   let button1 = document.getElementById("button1");
 
+  // Ablauf der Farbreihenfolge
+
+  if (message == "admin") {
+    intervalID = window.setInterval(changeColor, 1000);
+  }
+
+
+// Jeder bereit?
+
   if (message == "süd") {
     let y = button1.offsetTop;
-    let readysüd = true;
+    readysüd = true;
   }
 
   if (message == "nord") {
     let y = button1.offsetTop;
-    let readynord = true;
+    readynord = true;
   }
 
   if (message == "ost") {
     let x = button1.offsetLeft;
-    let readyost = true;
+    readyost = true;
   }
 
   if (message == "west") {
     let x = button1.offsetLeft;
-    let readyost = true;
+    readyost = true;
   }
 
 //   if (readysüd === true && readynord === true && readyost === true && readywest === true) {
@@ -71,3 +84,19 @@ console.log("funktioniert");
 
 //   }
 });
+
+
+/**
+ * Shuffles array in place.
+ * @param {Array} a items An array containing the items.
+ */
+ function shuffle(a) {
+  var j, x, i;
+  for (i = a.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      x = a[i];
+      a[i] = a[j];
+      a[j] = x;
+  }
+  return a;
+}
