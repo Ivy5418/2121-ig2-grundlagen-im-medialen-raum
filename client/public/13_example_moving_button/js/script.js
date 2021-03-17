@@ -22,25 +22,25 @@ socket.on("serverEvent", function (message) {
 
   if (message == "süd") {
     let y = button1.offsetTop;
-    let readysüd = true;
+
   }
 
   if (message == "nord") {
     let y = button1.offsetTop;
-    let readynord = true;
+    
   }
 
   if (message == "ost") {
     let x = button1.offsetLeft;
-    let readyost = true;
+  
   }
 
   if (message == "west") {
     let x = button1.offsetLeft;
-    let readywest = true;
+    
   }
 
-  if (readysüd === true && readynord === true && readyost === true && readywest === true) {
+  if{
     console.log("funktioniert");
   }
 });
