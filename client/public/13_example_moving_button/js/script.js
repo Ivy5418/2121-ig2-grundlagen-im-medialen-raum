@@ -15,14 +15,6 @@ let colors =  document.getElementsByClassName("color")
 let intervalID;
 let counter = 0;
 
-
-// Abgeschickt
-
-function handleButtonClick() {
-  // console.log("button wurde geklickt");
-  socket.emit("serverEvent", "ost");
-}
-
 function changeColor() {
   console.log(counter);
   
@@ -31,14 +23,22 @@ function changeColor() {
   counter++;
     if (counter > 7) {
         clearInterval(intervalID)
-    }
-    socket.emit("serverEvent", "admin");  
+    } 
+}
+
+intervalID = window.setInterval(changeColor, 1000);
+
+// Abgeschickt
+
+function handleButtonClick() {
+  // console.log("button wurde geklickt");
+  socket.emit("serverEvent", "ost");
 }
 
 
 socket.on("connected", function (msg) {
   console.log(msg);
-
+})
 
 // Incoming events
 
@@ -46,13 +46,6 @@ socket.on("serverEvent", function (message) {
   console.log(message);
 
   let button1 = document.getElementById("button1");
-
-  // Ablauf der Farbreihenfolge
-
-  if (message == "admin") {
-    intervalID = window.setInterval(changeColor, 1000);
-  }
-
 
 // Jeder bereit?
 
