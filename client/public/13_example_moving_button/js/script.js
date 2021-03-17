@@ -1,22 +1,20 @@
 // Connecting to server. Don't touch this :-)
 let socket = io();
-<<<<<<< HEAD
-=======
-let readysüd = false
-let readynord = false
-let readyost = false
-let readywest = false
 
->>>>>>> afd807aeb00979d877c1446626abc66721e62e84
+let readysüd = false;
+let readynord = false;
+let readyost = false;
+let readywest = false;
 
 function handleButtonClick() {
   // console.log("button wurde geklickt");
-  socket.emit("serverEvent", "nord");
+  socket.emit("serverEvent", "ost");
 }
 
 socket.on("connected", function (msg) {
   console.log(msg);
 });
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 socket.on('newUsersEvent', function (myID, myIndex, userList) {
@@ -27,6 +25,8 @@ socket.on('newUsersEvent', function (myID, myIndex, userList) {
 
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> 092ae8f1c064f6fd92a7d4d9a01e2470d86903d8
 // Incoming events
 socket.on("serverEvent", function (message) {
   console.log(message);
@@ -35,27 +35,24 @@ socket.on("serverEvent", function (message) {
 
   if (message == "süd") {
     let y = button1.offsetTop;
-    y = y + 20;
-    button1.style.top = y + "px";
+    let readysüd = true;
   }
 
   if (message == "nord") {
     let y = button1.offsetTop;
-    y = y - 20;
-    button1.style.top = y + "px";
+    let readynord = true;
   }
 
   if (message == "ost") {
     let x = button1.offsetLeft;
-    x = x - 20;
-    button1.style.left = x + "px";
+    let readyost = true;
   }
 
   if (message == "west") {
     let x = button1.offsetLeft;
-    x = x + 20;
-    button1.style.left = x + "px";
+    let readyost = true;
   }
+<<<<<<< HEAD
 =======
 >>>>>>> 3ea10f194f4315ca7fe480316c5c15cc4c7a30d1
 // Incoming events 
@@ -91,4 +88,10 @@ socket.on('serverEvent', function (message) {
     }
 
 >>>>>>> afd807aeb00979d877c1446626abc66721e62e84
+=======
+
+  if (readysüd === true && readynord === true && readyost === true && readywest === true) {
+    console.log("funktioniert");
+  }
+>>>>>>> 092ae8f1c064f6fd92a7d4d9a01e2470d86903d8
 });
