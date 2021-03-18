@@ -1,14 +1,24 @@
 // Connecting to server. Don't touch this :-)
 let socket = io();
 
+let myID, myIndex;
+let userList = [];
+
 let readysüd = false;
 let readynord = false;
 let readyost = false;
 let readywest = false;
 
-let colorRow = ["#534E8C", "#FB8D8F", "#E4AD27", "#398B9D", "#534E8C", "#FB8D8F", "#E4AD27", "#398B9D"];
-
-colorRow = shuffle(colorRow);
+let colorRow = [
+  "#534E8C",
+  "#FB8D8F",
+  "#E4AD27",
+  "#398B9D",
+  "#534E8C",
+  "#FB8D8F",
+  "#E4AD27",
+  "#398B9D",
+];
 
 let colors = document.getElementsByClassName("color");
 let intervalID;
@@ -67,10 +77,34 @@ socket.on("serverEvent", function (message) {
     readyost = true;
   }
 
-  //   if (readysüd === true && readynord === true && readyost === true && readywest === true) {
-  if (readyost === true) console.log("funktioniert");
+  if (
+    readysüd === true &&
+    readynord === true &&
+    readyost === true &&
+    readywest === true
+  ) {
+    if (myIndex == 0) {
+      colorRow = shuffle(colorRow);
+      socket.emit('serverEvent', { type: "colorSet", color: colorRow });
+    }
+    //if (readyost === true) console.log("funktioniert");
+  }
 
-  //   }
+  if (message.type == "colorSet") {
+    console.log(message.color);
+  }
+});
+
+socket.on("newUsersEvent", function (gmyID, gmyIndex, guserList) {
+  console.log("New users event: ");
+  console.log("That's me: " + gmyID);
+  console.log("My index in the list: " + gmyIndex);
+  console.log("That's the new users: ");
+  console.log(guserList);
+
+  myID = gmyID;
+  myIndex = gmyIndex;
+  userList = guserList;
 });
 
 /**
