@@ -28,18 +28,18 @@ let clickCounter = 0;
 function changeColor(changeColorRow) {
   console.log(counter);
 
-  $('.button').css('display', 'none');
-  $('.buttonviolet').css('display', 'none');
-  $('.buttonyellow').css('display', 'none');
-  $('.buttonblue').css('display', 'none');
-  $('.buttonpink').css('display', 'none');
+  $(".button").css("display", "none");
+  $(".buttonviolet").css("display", "none");
+  $(".buttonyellow").css("display", "none");
+  $(".buttonblue").css("display", "none");
+  $(".buttonpink").css("display", "none");
   $("body").css("background-color", changeColorRow[counter]);
 
   counter++;
 
   if (counter < 7) {
     setTimeout(() => {
-      changeColor(changeColorRow)
+      changeColor(changeColorRow);
     }, 1000);
   }
 }
@@ -51,7 +51,7 @@ function changeColor(changeColorRow) {
 function handleButtonClick() {
   // console.log("button wurde geklickt");
   socket.emit("serverEvent", { type: "clickStart" });
-  $('.button').css('pointer-events', 'none');
+  $(".button").css("pointer-events", "none");
 }
 
 socket.on("connected", function (msg) {
@@ -66,24 +66,20 @@ socket.on("serverEvent", function (message) {
   let button1 = document.getElementById("button1");
 
   // Jeder bereit?
-  if(message.type == "clickStart") {
-
+  if (message.type == "clickStart") {
     clickCounter++;
+    console.log(userList.length);
     console.log(clickCounter);
-   
 
-    if (clickCounter == 3){
-      
+    if (clickCounter == userList.length) {
       if (myIndex == 0) {
         colorRow = shuffle(colorRow);
         socket.emit("serverEvent", { type: "colorSet", color: colorRow });
       }
-
     }
 
-
     if (message.type == "colorSet") {
-      changeColor(message.color)
+      changeColor(message.color);
       console.log(message.color);
     }
   }
@@ -100,35 +96,29 @@ socket.on("newUsersEvent", function (gmyID, gmyIndex, guserList) {
   myIndex = gmyIndex;
   userList = guserList;
 
-  
   if (myIndex == 0) {
-
     $(".buttonviolet").text("You");
-    $(".buttonviolet").css("opacity", "100%" );
-    $(".buttonviolet").css("background-color", "#534E8C" );
+    $(".buttonviolet").css("opacity", "100%");
+    $(".buttonviolet").css("background-color", "#534E8C");
   }
 
   if (myIndex == 1) {
-
     $(".buttonyellow").text("You");
-    $(".buttonyellow").css("opacity", "100%" );
-    $(".buttonyellow").css("background-color", "#E4AD27" );
-
-  }                     
+    $(".buttonyellow").css("opacity", "100%");
+    $(".buttonyellow").css("background-color", "#E4AD27");
+  }
 
   if (myIndex == 2) {
     $(".buttonpink").text("You");
-    $(".buttonpink").css("opacity", "100%" );
-    $(".buttonpink").css("background-color", "#FB8D8F" );
+    $(".buttonpink").css("opacity", "100%");
+    $(".buttonpink").css("background-color", "#FB8D8F");
   }
-  
 
   if (myIndex == 3) {
     $(".buttonblue").text("You");
-    $(".buttonblue").css("opacity", "100%" );
-    $(".buttonblue").css("background-color", "#398B9D" );
+    $(".buttonblue").css("opacity", "100%");
+    $(".buttonblue").css("background-color", "#398B9D");
   }
-
 });
 
 /**
