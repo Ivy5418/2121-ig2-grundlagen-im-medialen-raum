@@ -153,7 +153,7 @@ function handleReadyClick() {
 function checkForReadiness() {
   if (clickCounter === 3) {
     console.log("READY TO START");
-    //$(".button2").show();
+    $(".button2").show();
   }
 }
 
