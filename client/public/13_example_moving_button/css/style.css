@@ -1,82 +1,95 @@
 body {
-    background-color: #2F2F2F;
-    padding: 0;
-    margin: 0;
+  background-color: #2f2f2f;
+  padding: 0;
+  margin: 0;
 }
 
-.button {
-    position: absolute;
-    z-index:2000;
-    height: 50px;
-    width: 200px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #2F2F2F;
-    color: white;
-    text-align: center;
-    line-height: 50px;
-    font-family: Helvetica
+.button1 {
+  position: absolute;
+  z-index: 2000;
+  height: 50px;
+  width: 200px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #2f2f2f;
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  font-family: Helvetica;
+}
 
+.button2 {
+  position: absolute;
+  z-index: 2000;
+  height: 50px;
+  width: 200px;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  background-color: #2f2f2f;
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  font-family: Helvetica;
 }
 
 .buttonviolet {
-    opacity: 20%;
-    background-color: #534E8C;
-    position: absolute;
-    z-index:1000;
-    height: 50%;
-    width: 50%;
-    left: 0;
-    top: 0;
-    color: white;
-    text-align: center;
-    line-height: 200px;
-    font-family: Helvetica
-
+  opacity: 20%;
+  background-color: #534e8c;
+  position: absolute;
+  z-index: 1000;
+  height: 50%;
+  width: 50%;
+  left: 0;
+  top: 0;
+  color: white;
+  text-align: center;
+  line-height: 200px;
+  font-family: Helvetica;
 }
 
 .buttonpink {
-    opacity: 20%;
-    background-color: #FB8D8F;
-    position: absolute;
-    z-index:1000;
-    height: 50%;
-    width: 50%;
-    left: 0;
-    top: 50%;
-    color: white;
-    text-align: center;
-    line-height: 200px;
-    font-family: Helvetica
+  opacity: 20%;
+  background-color: #fb8d8f;
+  position: absolute;
+  z-index: 1000;
+  height: 50%;
+  width: 50%;
+  left: 0;
+  top: 50%;
+  color: white;
+  text-align: center;
+  line-height: 200px;
+  font-family: Helvetica;
 }
 
 .buttonyellow {
-    opacity: 20%;
-    background-color: #666666;
-    position: absolute;
-    z-index:1000;
-    height: 50%;
-    width: 50%;
-    left: 50%;
-    top: 0;
-    color: white;
-    text-align: center;
-    line-height: 200px;
-    font-family: Helvetica
+  opacity: 20%;
+  background-color: #666666;
+  position: absolute;
+  z-index: 1000;
+  height: 50%;
+  width: 50%;
+  left: 50%;
+  top: 0;
+  color: white;
+  text-align: center;
+  line-height: 200px;
+  font-family: Helvetica;
 }
 
 .buttonblue {
-    opacity: 20%;
-    background-color: #398B9D;
-    position: absolute;
-    z-index:1000;
-    height: 50%;
-    width: 50%;
-    left: 50%;
-    top: 50%;
-    color: white;
-    text-align: center;
-    line-height: 200px;
-    font-family: Helvetica
+  opacity: 20%;
+  background-color: #398b9d;
+  position: absolute;
+  z-index: 1000;
+  height: 50%;
+  width: 50%;
+  left: 50%;
+  top: 50%;
+  color: white;
+  text-align: center;
+  line-height: 200px;
+  font-family: Helvetica;
 }
