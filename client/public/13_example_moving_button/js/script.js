@@ -41,7 +41,7 @@ function changeColor() {
 
 function handleButtonClick() {
   // console.log("button wurde geklickt");
-  socket.emit("serverEvent", "ost");
+  socket.emit("serverEvent", { type: "clickStart", user: "ost" });
 }
 
 socket.on("connected", function (msg) {
@@ -56,39 +56,37 @@ socket.on("serverEvent", function (message) {
   let button1 = document.getElementById("button1");
 
   // Jeder bereit?
-
-  if (message == "süd") {
-    let y = button1.offsetTop;
-    readysüd = true;
-  }
-
-  if (message == "nord") {
-    let y = button1.offsetTop;
-    readynord = true;
-  }
-
-  if (message == "ost") {
-    let x = button1.offsetLeft;
-    readyost = true;
-  }
-
-  if (message == "west") {
-    let x = button1.offsetLeft;
-    readyost = true;
-  }
-
-  if (
-    // readysüd === true &&
-    readynord === true &&
-    readyost === true &&
-    readywest === true
-  ) {
-    if (myIndex == 0) {
-      colorRow = shuffle(colorRow);
-      socket.emit('serverEvent', { type: "colorSet", color: colorRow });
+  if(message.type == "clickStart") {
+    if (message.user == "süd") {
+      let y = button1.offsetTop;
+      readysüd = true;
     }
-    //if (readyost === true) console.log("funktioniert");
+  
+    if (message.user == "nord") {
+      let y = button1.offsetTop;
+      readynord = true;
+    }
+  
+    if (message.user == "ost") {
+      let x = button1.offsetLeft;
+      readyost = true;
+    }
+  
+    if (message.user == "west") {
+      let x = button1.offsetLeft;
+      readyost = true;
+    }
+
+    if (readyost === true && readywest === true && readynord === true){
+      
+      if (myIndex == 0) {
+        colorRow = shuffle(colorRow);
+        socket.emit("serverEvent", { type: "colorSet", color: colorRow });
+      }
+      //if (readyost === true) console.log("funktioniert");
+    }
   }
+  
 
   if (message.type == "colorSet") {
     console.log(message.color);
