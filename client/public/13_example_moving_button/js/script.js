@@ -135,11 +135,6 @@ function handleReadyClick() {
   //FIXME: Comment out now for testing purpose
   // Hides the button after press
   $(".button1").hide();
-
-  // Shows the start button if everyone is ready
-  if (clickCounter === 3) {
-    $(".button2").show();
-  }
 }
 
 /**
@@ -149,6 +144,12 @@ socket.on("serverEvent", (message) => {
   // Count if everyone is ready
   if (message.type == "clickReady") {
     clickCounter++;
+
+    // Shows the start button if everyone is ready
+    if (clickCounter === 3) {
+      console.log("READY TO START");
+      $(".button2").show();
+    }
   }
 
   // Changes the color if the game starts
