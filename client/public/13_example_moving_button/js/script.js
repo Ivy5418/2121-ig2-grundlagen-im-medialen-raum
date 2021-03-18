@@ -6,24 +6,22 @@ let readynord = false;
 let readyost = false;
 let readywest = false;
 
-
-
-let colorRow = ["red", "greenyellow", "yellow", "blueviolet", "khaki", "olivedrab", "blue", "indianred"]
+let colorRow = ["red", "greenyellow", "yellow", "blueviolet", "khaki", "olivedrab", "blue", "indianred"];
 colorRow = shuffle(colorRow);
 
-let colors =  document.getElementsByClassName("color")
+let colors = document.getElementsByClassName("color");
 let intervalID;
 let counter = 0;
 
 function changeColor() {
   console.log(counter);
-  
-  $('#button1').css("background-color", colorRow[counter])
+
+  $("#button1").css("background-color", colorRow[counter]);
 
   counter++;
-    if (counter > 7) {
-        clearInterval(intervalID)
-    } 
+  if (counter > 7) {
+    clearInterval(intervalID);
+  }
 }
 
 intervalID = window.setInterval(changeColor, 1000);
@@ -35,10 +33,9 @@ function handleButtonClick() {
   socket.emit("serverEvent", "ost");
 }
 
-
 socket.on("connected", function (msg) {
   console.log(msg);
-})
+});
 
 // Incoming events
 
@@ -47,7 +44,7 @@ socket.on("serverEvent", function (message) {
 
   let button1 = document.getElementById("button1");
 
-// Jeder bereit?
+  // Jeder bereit?
 
   if (message == "süd") {
     let y = button1.offsetTop;
@@ -69,27 +66,23 @@ socket.on("serverEvent", function (message) {
     readyost = true;
   }
 
-//   if (readysüd === true && readynord === true && readyost === true && readywest === true) {
-    if (readyost === true)
-console.log("funktioniert");
+  //   if (readysüd === true && readynord === true && readyost === true && readywest === true) {
+  if (readyost === true) console.log("funktioniert");
 
-
-
-//   }
+  //   }
 });
-
 
 /**
  * Shuffles array in place.
  * @param {Array} a items An array containing the items.
  */
- function shuffle(a) {
+function shuffle(a) {
   var j, x, i;
   for (i = a.length - 1; i > 0; i--) {
-      j = Math.floor(Math.random() * (i + 1));
-      x = a[i];
-      a[i] = a[j];
-      a[j] = x;
+    j = Math.floor(Math.random() * (i + 1));
+    x = a[i];
+    a[i] = a[j];
+    a[j] = x;
   }
   return a;
 }
