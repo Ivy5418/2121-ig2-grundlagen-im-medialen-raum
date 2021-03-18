@@ -73,7 +73,6 @@ function changeColor(changeColorRow) {
     resetGame();
   }
 
-  //FIXME: Its commended out for debugging
   if (gameState === "RUNNING" && counter != counterRightClicks) {
     console.log("TIME ELAPSED");
     resetGame();
@@ -103,7 +102,7 @@ function changeColor(changeColorRow) {
 function getCurrentTimeInterval() {
   console.log(wonRounds);
   if (wonRounds === 0) {
-    return timeInterval;
+    return (timeInterval = 1000);
   } else return timeInterval / wonRounds;
 }
 
@@ -126,6 +125,8 @@ function handleStartClick() {
   $(".button1").hide();
   $(".button2").hide();
   $(".resultCardContainer").hide();
+
+  socket.emit("serverEvent", { type: "gameStart" });
 }
 
 function handleReadyClick() {
@@ -161,7 +162,10 @@ socket.on("serverEvent", (message) => {
   // Changes the color if the game starts
   if (message.type == "colorSet") {
     changeColor(message.color);
-    handleStartClick();
+  }
+
+  if (message.type == "gameStart") {
+    gameStart();
   }
 
   // Add up the right Answerers
@@ -211,7 +215,6 @@ function resetGame() {
   $(".button1").show();
 
   getPlayerTiles();
-
   handleGameResult();
 }
 
