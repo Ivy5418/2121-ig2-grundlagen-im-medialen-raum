@@ -6,7 +6,8 @@ let readynord = false;
 let readyost = false;
 let readywest = false;
 
-let colorRow = ["red", "greenyellow", "yellow", "blueviolet", "khaki", "olivedrab", "blue", "indianred"];
+let colorRow = ["#534E8C", "#FB8D8F", "#E4AD27", "#398B9D", "#534E8C", "#FB8D8F", "#E4AD27", "#398B9D"];
+
 colorRow = shuffle(colorRow);
 
 let colors = document.getElementsByClassName("color");
