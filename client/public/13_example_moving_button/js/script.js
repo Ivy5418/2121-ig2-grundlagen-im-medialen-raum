@@ -106,6 +106,12 @@ function getCurrentTimeInterval() {
   } else return timeInterval / wonRounds;
 }
 
+function setCurrentColors() {
+  // Shuffle and send the color array to the client
+  colorRow = shuffle(colorRow);
+  socket.emit("serverEvent", { type: "colorSet", color: colorRow });
+}
+
 function handleStartClick() {
   /** Prepare for game start */
   // Resets the result card on game start
@@ -117,14 +123,14 @@ function handleStartClick() {
   // Get the current time interval Calculate
   timeInterval = getCurrentTimeInterval();
 
-  // Shuffle and send the color array to the client
-  colorRow = shuffle(colorRow);
-  socket.emit("serverEvent", { type: "colorSet", color: colorRow });
-
   // Hide the unused UI elements
   $(".button1").hide();
   $(".button2").hide();
   $(".resultCardContainer").hide();
+
+  // Set the new colors for every client
+  setCurrentColors();
+  changeColor();
 
   socket.emit("serverEvent", { type: "gameStart" });
 }
@@ -136,7 +142,6 @@ function handleReadyClick() {
   //FIXME: Comment out now for testing purpose
   // Hides the button after press
   $(".button1").hide();
-
   checkForReadiness();
 }
 
@@ -165,7 +170,9 @@ socket.on("serverEvent", (message) => {
   }
 
   if (message.type == "gameStart") {
-    gameStart();
+    if (gameState != "RUNNING") {
+      gameStart();
+    }
   }
 
   // Add up the right Answerers
