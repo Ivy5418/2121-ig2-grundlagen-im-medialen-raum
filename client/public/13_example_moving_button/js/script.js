@@ -133,7 +133,7 @@ function handleStartClick() {
 
 function handleReadyClick() {
   // Player is ready event
-  socket.emit("serverEvent", { type: "clickReady" });
+  socket.emit("serverEvent", { type: "clickReady", data: { id: myID } });
 
   //FIXME: Comment out now for testing purpose
   // Hides the button after press
@@ -156,7 +156,7 @@ socket.on("serverEvent", (message) => {
   // Count if everyone is ready
   if (message.type == "clickReady") {
     clickCounter++;
-
+    console.log(`PLAYER WITH ID: ${message.data.id} IS READY`);
     // Shows the start button if everyone is ready
     checkForReadiness();
   }
