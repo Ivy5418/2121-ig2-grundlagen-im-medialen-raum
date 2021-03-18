@@ -74,10 +74,10 @@ function changeColor(changeColorRow) {
   }
 
   //FIXME: Its commended out for debugging
-  // if (gameState === "RUNNING" && counter != counterRightClicks) {
-  //   console.log("TIME ELAPSED");
-  //   resetGame();
-  // }
+  if (gameState === "RUNNING" && counter != counterRightClicks) {
+    console.log("TIME ELAPSED");
+    resetGame();
+  }
 
   if (gameState === "RUNNING" && counter < 7) {
     counter++;
@@ -96,6 +96,10 @@ function changeColor(changeColorRow) {
   }
 }
 
+/**
+ * Calculate the current time Interval
+ * @returns
+ */
 function getCurrentTimeInterval() {
   console.log(wonRounds);
   if (wonRounds === 0) {
@@ -104,12 +108,16 @@ function getCurrentTimeInterval() {
 }
 
 function handleStartClick() {
-  // Removes the old card result
-  // $("#resultText").empty();
-
+  /** Prepare for game start */
+  // Resets the result card on game start
+  $(".resultCard").empty();
+  // Reset the counter on game start
   counter = 0;
+  // Set the game state
   gameState = "RUNNING";
+  // Get the current time interval Calculate
   timeInterval = getCurrentTimeInterval();
+
   // Shuffle and send the color array to the client
   colorRow = shuffle(colorRow);
   socket.emit("serverEvent", { type: "colorSet", color: colorRow });
@@ -162,14 +170,21 @@ socket.on("serverEvent", (message) => {
 });
 
 function handleGameResult() {
+  // Create a new div which gets deleted on reset later on
   $(".resultCardContainer").show();
   if (counterRightClicks === 6) {
-    $(".resultCard").append(`<p>YOU WON</p>`);
-    $(".resultCard").append(`<p>YOUR SCORE WAS ${counterRightClicks}</p>`);
+    $(".resultCard").append(`<p id="resultText">YOU WON</p>`);
+    $(".resultCard").append(
+      `<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`
+    );
+    // Count up the won rounds
     wonRounds++;
   } else {
-    $(".resultCard").append(`<p>YOU LOST</p>`);
-    $(".resultCard").append(`<p>YOUR SCORE WAS ${counterRightClicks}</p>`);
+    $(".resultCard").append(`<p id="resultText">YOU LOST</p>`);
+    $(".resultCard").append(
+      `<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`
+    );
+    // Reset the won rounds
     wonRounds = 0;
   }
 }
