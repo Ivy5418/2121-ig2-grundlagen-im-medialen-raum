@@ -1,7 +1,8 @@
 // Connecting to server. Don't touch this :-)
 let socket = io();
 
-let myID, myIndex;
+let myID;
+let myIndex;
 let userList = [];
 
 let gameState = "STOP";
@@ -145,7 +146,7 @@ function handleReadyClick() {
 function checkForReadiness() {
   if (clickCounter === 3) {
     console.log("READY TO START");
-    $(".button2").show();
+    //$(".button2").show();
   }
 }
 
