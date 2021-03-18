@@ -1,49 +1,82 @@
 body {
+    background-color: #2F2F2F;
     padding: 0;
     margin: 0;
 }
 
-/* .wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; */
-/* } */
 .button {
     position: absolute;
-    z-index:1000;
+    z-index:2000;
     height: 50px;
     width: 200px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: grey;
+    background-color: #2F2F2F;
     color: white;
     text-align: center;
     line-height: 50px;
-}
-.button.col1{
-    background-color: red;
-}
-.button.col2{
-    background-color: greenyellow;
-}
-.button.col3{
-    background-color:yellow;
-}
-.button.col4{
-    background-color: blueviolet;
-}
-.button.col5{
-    background-color: khaki;
-}
-.button.col6{
-    background-color: olivedrab;
-}
-.button.col7{
-    background-color: blue;
-}
-.button.col8{
-    background-color: indianred;
+    font-family: Helvetica
+
 }
 
+.buttonviolet {
+    opacity: 20%;
+    background-color: #534E8C;
+    position: absolute;
+    z-index:1000;
+    height: 50%;
+    width: 50%;
+    left: 0;
+    top: 0;
+    color: white;
+    text-align: center;
+    line-height: 200px;
+    font-family: Helvetica
+
+}
+
+.buttonpink {
+    opacity: 20%;
+    background-color: #FB8D8F;
+    position: absolute;
+    z-index:1000;
+    height: 50%;
+    width: 50%;
+    left: 0;
+    top: 50%;
+    color: white;
+    text-align: center;
+    line-height: 200px;
+    font-family: Helvetica
+}
+
+.buttonyellow {
+    opacity: 20%;
+    background-color: #666666;
+    position: absolute;
+    z-index:1000;
+    height: 50%;
+    width: 50%;
+    left: 50%;
+    top: 0;
+    color: white;
+    text-align: center;
+    line-height: 200px;
+    font-family: Helvetica
+}
+
+.buttonblue {
+    opacity: 20%;
+    background-color: #398B9D;
+    position: absolute;
+    z-index:1000;
+    height: 50%;
+    width: 50%;
+    left: 50%;
+    top: 50%;
+    color: white;
+    text-align: center;
+    line-height: 200px;
+    font-family: Helvetica
+}

@@ -29,6 +29,10 @@ function changeColor(changeColorRow) {
   console.log(counter);
 
   $('.button').css('display', 'none');
+  $('.buttonviolet').css('display', 'none');
+  $('.buttonyellow').css('display', 'none');
+  $('.buttonblue').css('display', 'none');
+  $('.buttonpink').css('display', 'none');
   $("body").css("background-color", changeColorRow[counter]);
 
   counter++;
@@ -68,20 +72,20 @@ socket.on("serverEvent", function (message) {
     console.log(clickCounter);
    
 
-    if (clickCounter == userList.length){
+    if (clickCounter == 3){
       
       if (myIndex == 0) {
         colorRow = shuffle(colorRow);
         socket.emit("serverEvent", { type: "colorSet", color: colorRow });
       }
-      //if (readyost === true) console.log("funktioniert");
-    }
-  }
-  
 
-  if (message.type == "colorSet") {
-    changeColor(message.color)
-    console.log(message.color);
+    }
+
+
+    if (message.type == "colorSet") {
+      changeColor(message.color)
+      console.log(message.color);
+    }
   }
 });
 
@@ -95,6 +99,36 @@ socket.on("newUsersEvent", function (gmyID, gmyIndex, guserList) {
   myID = gmyID;
   myIndex = gmyIndex;
   userList = guserList;
+
+  
+  if (myIndex == 0) {
+
+    $(".buttonviolet").text("You");
+    $(".buttonviolet").css("opacity", "100%" );
+    $(".buttonviolet").css("background-color", "#534E8C" );
+  }
+
+  if (myIndex == 1) {
+
+    $(".buttonyellow").text("You");
+    $(".buttonyellow").css("opacity", "100%" );
+    $(".buttonyellow").css("background-color", "#E4AD27" );
+
+  }                     
+
+  if (myIndex == 2) {
+    $(".buttonpink").text("You");
+    $(".buttonpink").css("opacity", "100%" );
+    $(".buttonpink").css("background-color", "#FB8D8F" );
+  }
+  
+
+  if (myIndex == 3) {
+    $(".buttonblue").text("You");
+    $(".buttonblue").css("opacity", "100%" );
+    $(".buttonblue").css("background-color", "#398B9D" );
+  }
+
 });
 
 /**
