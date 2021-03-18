@@ -23,15 +23,20 @@ let colorRow = [
 let colors = document.getElementsByClassName("color");
 let intervalID;
 let counter = 0;
+let clickCounter = 0;
 
-function changeColor() {
+function changeColor(changeColorRow) {
   console.log(counter);
 
-  $("#button1").css("background-color", colorRow[counter]);
+  $('.button').css('display', 'none');
+  $("body").css("background-color", changeColorRow[counter]);
 
   counter++;
-  if (counter > 7) {
-    clearInterval(intervalID);
+
+  if (counter < 7) {
+    setTimeout(() => {
+      changeColor(changeColorRow)
+    }, 1000);
   }
 }
 
@@ -41,7 +46,8 @@ function changeColor() {
 
 function handleButtonClick() {
   // console.log("button wurde geklickt");
-  socket.emit("serverEvent", { type: "clickStart", user: "ost" });
+  socket.emit("serverEvent", { type: "clickStart" });
+  $('.button').css('pointer-events', 'none');
 }
 
 socket.on("connected", function (msg) {
@@ -57,27 +63,12 @@ socket.on("serverEvent", function (message) {
 
   // Jeder bereit?
   if(message.type == "clickStart") {
-    if (message.user == "süd") {
-      let y = button1.offsetTop;
-      readysüd = true;
-    }
-  
-    if (message.user == "nord") {
-      let y = button1.offsetTop;
-      readynord = true;
-    }
-  
-    if (message.user == "ost") {
-      let x = button1.offsetLeft;
-      readyost = true;
-    }
-  
-    if (message.user == "west") {
-      let x = button1.offsetLeft;
-      readyost = true;
-    }
 
-    if (readyost === true && readywest === true && readynord === true){
+    clickCounter++;
+    console.log(clickCounter);
+   
+
+    if (clickCounter == userList.length){
       
       if (myIndex == 0) {
         colorRow = shuffle(colorRow);
@@ -89,6 +80,7 @@ socket.on("serverEvent", function (message) {
   
 
   if (message.type == "colorSet") {
+    changeColor(message.color)
     console.log(message.color);
   }
 });

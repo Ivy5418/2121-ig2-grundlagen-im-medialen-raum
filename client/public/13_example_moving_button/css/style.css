@@ -12,8 +12,15 @@ body {
 .button {
     position: absolute;
     z-index:1000;
-      height: 100vh;
-      width: 100vw;
+    height: 50px;
+    width: 200px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: grey;
+    color: white;
+    text-align: center;
+    line-height: 50px;
 }
 .button.col1{
     background-color: red;
