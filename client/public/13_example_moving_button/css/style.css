@@ -4,9 +4,33 @@ body {
   margin: 0;
 }
 
+#colorButton {
+  opacity: 0%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.resultCardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 50vh;
+}
+
+.resultCard {
+  z-index: 2;
+  width: 300px;
+  height: 200px;
+  background-color: white;
+}
+
 .button1 {
   position: absolute;
-  z-index: 2000;
+  z-index: 2;
   height: 50px;
   width: 200px;
   left: 50%;
@@ -17,11 +41,12 @@ body {
   text-align: center;
   line-height: 50px;
   font-family: Helvetica;
+  cursor: pointer;
 }
 
 .button2 {
   position: absolute;
-  z-index: 2000;
+  z-index: 2;
   height: 50px;
   width: 200px;
   left: 50%;
@@ -32,12 +57,12 @@ body {
   text-align: center;
   line-height: 50px;
   font-family: Helvetica;
+  cursor: pointer;
 }
 
 .buttonviolet {
   background-color: #534e8c;
   position: absolute;
-  z-index: 1000;
   height: 50%;
   width: 50%;
   left: 0;
@@ -51,7 +76,6 @@ body {
 .buttonpink {
   background-color: #fb8d8f;
   position: absolute;
-  z-index: 1000;
   height: 50%;
   width: 50%;
   left: 0;
@@ -65,7 +89,6 @@ body {
 .buttonyellow {
   background-color: #e4ad27;
   position: absolute;
-  z-index: 1000;
   height: 50%;
   width: 50%;
   left: 50%;
@@ -79,7 +102,6 @@ body {
 .buttonblue {
   background-color: #398b9d;
   position: absolute;
-  z-index: 1000;
   height: 50%;
   width: 50%;
   left: 50%;

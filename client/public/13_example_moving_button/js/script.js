@@ -1,12 +1,13 @@
 // Connecting to server. Don't touch this :-)
 let socket = io();
 
-let gameState = "STOP";
-
 let myID, myIndex;
 let userList = [];
 
+let gameState = "STOP";
 let counterRightClicks = 0;
+let wonRounds = 0;
+let timeInterval = 1000;
 
 let colorRow = [
   "#534e8c",
@@ -72,10 +73,11 @@ function changeColor(changeColorRow) {
     resetGame();
   }
 
-  if (gameState === "RUNNING" && counter != counterRightClicks) {
-    console.log("TIME ELAPSED");
-    resetGame();
-  }
+  //FIXME: Its commended out for debugging
+  // if (gameState === "RUNNING" && counter != counterRightClicks) {
+  //   console.log("TIME ELAPSED");
+  //   resetGame();
+  // }
 
   if (gameState === "RUNNING" && counter < 7) {
     counter++;
@@ -90,18 +92,32 @@ function changeColor(changeColorRow) {
 
     setTimeout(() => {
       changeColor(changeColorRow);
-    }, 1000);
+    }, timeInterval);
   }
 }
 
+function getCurrentTimeInterval() {
+  console.log(wonRounds);
+  if (wonRounds === 0) {
+    return timeInterval;
+  } else return timeInterval / wonRounds;
+}
+
 function handleStartClick() {
+  // Removes the old card result
+  // $("#resultText").empty();
+
   counter = 0;
   gameState = "RUNNING";
+  timeInterval = getCurrentTimeInterval();
   // Shuffle and send the color array to the client
   colorRow = shuffle(colorRow);
   socket.emit("serverEvent", { type: "colorSet", color: colorRow });
+
+  // Hide the unused UI elements
   $(".button1").hide();
   $(".button2").hide();
+  $(".resultCardContainer").hide();
 }
 
 function handleReadyClick() {
@@ -145,21 +161,35 @@ socket.on("serverEvent", (message) => {
   }
 });
 
+function handleGameResult() {
+  $(".resultCardContainer").show();
+  if (counterRightClicks === 6) {
+    $(".resultCard").append(`<p>YOU WON</p>`);
+    $(".resultCard").append(`<p>YOUR SCORE WAS ${counterRightClicks}</p>`);
+    wonRounds++;
+  } else {
+    $(".resultCard").append(`<p>YOU LOST</p>`);
+    $(".resultCard").append(`<p>YOUR SCORE WAS ${counterRightClicks}</p>`);
+    wonRounds = 0;
+  }
+}
+
 function resetGame() {
   gameState = "STOP";
   clickCounter = 0;
   counter = 0;
 
+  // Handle UI elements
   $("#colorButton").hide();
-
   $(".buttonviolet").show();
   $(".buttonyellow").show();
   $(".buttonpink").show();
   $(".buttonblue").show();
+  $(".button1").show();
 
   getPlayerTiles();
 
-  $(".button1").show();
+  handleGameResult();
 }
 
 /**
