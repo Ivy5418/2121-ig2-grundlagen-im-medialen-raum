@@ -35,7 +35,6 @@ body {
 }
 
 .buttonviolet {
-  opacity: 20%;
   background-color: #534e8c;
   position: absolute;
   z-index: 1000;
@@ -50,7 +49,6 @@ body {
 }
 
 .buttonpink {
-  opacity: 20%;
   background-color: #fb8d8f;
   position: absolute;
   z-index: 1000;
@@ -65,8 +63,7 @@ body {
 }
 
 .buttonyellow {
-  opacity: 20%;
-  background-color: #666666;
+  background-color: #e4ad27;
   position: absolute;
   z-index: 1000;
   height: 50%;
@@ -80,7 +77,6 @@ body {
 }
 
 .buttonblue {
-  opacity: 20%;
   background-color: #398b9d;
   position: absolute;
   z-index: 1000;

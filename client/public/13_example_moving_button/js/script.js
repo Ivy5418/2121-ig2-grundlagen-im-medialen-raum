@@ -6,15 +6,17 @@ let gameState = "STOP";
 let myID, myIndex;
 let userList = [];
 
+let counterRightClicks = 0;
+
 let colorRow = [
-  "#534E8C",
-  "#FB8D8F",
-  "#E4AD27",
-  "#398B9D",
-  "#534E8C",
-  "#FB8D8F",
-  "#E4AD27",
-  "#398B9D",
+  "#534e8c",
+  "#e4ad27",
+  "#fb8d8f",
+  "#398b9d",
+  "#534e8c",
+  "#e4ad27",
+  "#fb8d8f",
+  "#398b9d",
 ];
 
 let colors = document.getElementsByClassName("color");
@@ -25,13 +27,13 @@ let clickCounter = 0;
 function getMyColor() {
   switch (myIndex) {
     case 0:
-      return "#534E8C";
+      return "#534e8c";
     case 1:
-      return "#E4AD27";
+      return "#e4ad27";
     case 2:
-      return "#FB8D8F";
+      return "#fb8d8f";
     case 3:
-      return "#398B9D";
+      return "#398b9d";
     default:
       console.error("Invalid player index");
       break;
@@ -65,7 +67,13 @@ function clickOnColor(color) {
  * @param {*} changeColorRow
  */
 function changeColor(changeColorRow) {
+  // Reset the game after all colors are displayed
   if (counter === 6) {
+    resetGame();
+  }
+
+  if (gameState === "RUNNING" && counter != counterRightClicks) {
+    console.log("TIME ELAPSED");
     resetGame();
   }
 
@@ -124,6 +132,12 @@ socket.on("serverEvent", (message) => {
     changeColor(message.color);
   }
 
+  // Add up the right Answerers
+  if (message.type == "rightColor") {
+    counterRightClicks++;
+    console.log(`RIGHT COLOR NUMBER ${counterRightClicks}`);
+  }
+
   if (message.type == "wrongColor") {
     // Game reset after wrong button press
     console.log("GAME RESET");
@@ -134,20 +148,13 @@ socket.on("serverEvent", (message) => {
 function resetGame() {
   gameState = "STOP";
   clickCounter = 0;
-  counter = 10;
+  counter = 0;
 
   $("#colorButton").hide();
 
-  $(".buttonviolet").css("opacity", "20%");
   $(".buttonviolet").show();
-
-  $(".buttonyellow").css("opacity", "20%");
   $(".buttonyellow").show();
-
-  $(".buttonpink").css("opacity", "20%");
   $(".buttonpink").show();
-
-  $(".buttonblue").css("opacity", "20%");
   $(".buttonblue").show();
 
   getPlayerTiles();
@@ -177,22 +184,22 @@ function getPlayerTiles() {
     case 0:
       $(".buttonviolet").text("You");
       $(".buttonviolet").css("opacity", "100%");
-      $(".buttonviolet").css("background-color", "#534E8C");
+      $(".buttonviolet").css("background-color", "#534e8c");
       break;
     case 1:
       $(".buttonyellow").text("You");
       $(".buttonyellow").css("opacity", "100%");
-      $(".buttonyellow").css("background-color", "#E4AD27");
+      $(".buttonyellow").css("background-color", "#e4ad27");
       break;
     case 2:
       $(".buttonpink").text("You");
       $(".buttonpink").css("opacity", "100%");
-      $(".buttonpink").css("background-color", "#FB8D8F");
+      $(".buttonpink").css("background-color", "#fb8d8f");
       break;
     case 3:
       $(".buttonblue").text("You");
       $(".buttonblue").css("opacity", "100%");
-      $(".buttonblue").css("background-color", "#398B9D");
+      $(".buttonblue").css("background-color", "#398b9d");
       break;
     default:
       console.error("Invalid player index");
