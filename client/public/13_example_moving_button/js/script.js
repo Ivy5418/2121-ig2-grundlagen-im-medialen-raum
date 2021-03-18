@@ -35,7 +35,7 @@ function changeColor() {
   }
 }
 
-intervalID = window.setInterval(changeColor, 1000);
+// intervalID = window.setInterval(changeColor, 1000);
 
 // Abgeschickt
 
@@ -78,7 +78,7 @@ socket.on("serverEvent", function (message) {
   }
 
   if (
-    readysüd === true &&
+    // readysüd === true &&
     readynord === true &&
     readyost === true &&
     readywest === true
