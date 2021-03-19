@@ -54,7 +54,10 @@ function clickOnColor(color) {
     // Hide Button after wrong press
     $("#colorButton").hide();
   }
-}
+
+
+    
+  }
 
 /**
  * Change the color of the given button
@@ -88,7 +91,12 @@ function changeColor(changeColorRow) {
       changeColor(changeColorRow);
     }, timeInterval);
   }
+  else if (counter = 0) {
+    
+  }
+
 }
+
 
 /**
  * Calculate the current time Interval
@@ -179,6 +187,7 @@ function handleGameResult() {
     $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`);
     // Count up the won rounds
     wonRounds++;
+    counterRightClicks = wonRounds;
   } else {
     $(".resultCard").append(`<p id="resultText">YOU LOST</p>`);
     $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`);
@@ -189,6 +198,7 @@ function handleGameResult() {
 
 function resetGame() {
   gameState = "STOP";
+  console.log("resetGameStop");
   clickCounter = 0;
   counter = 0;
 
