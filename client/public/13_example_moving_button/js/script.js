@@ -107,7 +107,6 @@ function clickOnColor(color) {
   // Add up the right Answerers
   if (message.type == "rightColor") {
     // Hide Button after correct press
-    $("#colorButton").hide();
 
     counterRightClicks++;
     console.log(`RIGHT COLOR NUMBER ${counterRightClicks}`);
