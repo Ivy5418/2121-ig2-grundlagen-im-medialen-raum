@@ -20,11 +20,6 @@ let clickCounter = 0;
 
 // User interaction --------------------------------------------------------------------------------------------
 
-function handleStartClick() {
-  console.log("handleStartClick");
-  socket.emit("serverEvent", { type: "gameStart" });
-}
-
 function handleReadyClick() {
   console.log("handleReadyClick");
   // Player is ready event
@@ -33,6 +28,12 @@ function handleReadyClick() {
   socket.emit("serverEvent", { type: "clickReady", data: { id: myID } });
   //checkForReadiness();
 }
+
+function handleStartClick() {
+  console.log("handleStartClick");
+  socket.emit("serverEvent", { type: "gameStart" });
+}
+
 
 function clickOnColor(color) {
   console.log("clickOnColor");
@@ -80,7 +81,7 @@ function clickOnColor(color) {
  socket.on("serverEvent", (message) => {
 
   if (message.type == "initGame") {
-    // Game reset after wrong button press
+    // Game reset 
     console.log("GAME INIT");
     initGame();
   }
@@ -121,8 +122,8 @@ function clickOnColor(color) {
     $("#colorButton").hide();
 
     // Game reset after wrong button press
-    console.log("GAME RESET");
-    newLevel();
+    console.log("GAME OVER");
+    gameOver();
   }
 });
 
@@ -154,6 +155,25 @@ function initGame() {
 function newLevel() {
   gameState = "STOP";
   console.log("newLevel");
+  clickCounter = 0;
+  counter = 0;
+
+  // Handle UI elements
+  $(".resultCard").show();
+  $("#colorButton").hide();
+  $(".buttonviolet").show();
+  $(".buttonyellow").show();
+  $(".buttonpink").show();
+  $(".buttonblue").show();
+  $(".button1").show();
+
+  getPlayerTiles();
+  handleGameResult();
+}
+
+function gameOver() {
+  gameState = "STOP";
+  console.log("gameOver");
   clickCounter = 0;
   counter = 0;
 
@@ -203,7 +223,7 @@ function getPlayerTiles() {
 
 function checkForReadiness() {
   console.log(clickCounter);
-  if (clickCounter === 4) {
+  if (clickCounter === 2) {
     console.log("READY TO START");
 
     if (myIndex == 0)
@@ -218,13 +238,13 @@ function handleGameResult() {
   $(".resultCardContainer").show();
   if (counterRightClicks === 8) {
     $(".resultCard").append(`<p id="resultText">YOU WON</p>`);
-    $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`);
+    $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${wonRounds}</p>`);
     console.log("gameresult:won");
     // Count up the won rounds
     wonRounds++;
   } else {
     $(".resultCard").append(`<p id="resultText">YOU LOST</p>`);
-    $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`);
+    $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${wonRounds}</p>`);
     console.log("gameresult:lost");
     // Reset the won rounds
     wonRounds = 0;
@@ -272,10 +292,10 @@ function gameStart() {
     newLevel();
   }
 
-  /* if (gameState === "RUNNING" && counter != counterRightClicks) {
-     console.log("TIME ELAPSED");
-     resetGame();
-   }*/
+  //  if (gameState === "RUNNING" && counter != counterRightClicks) {
+  //    console.log("TIME ELAPSED");
+  //    gameOver();
+  //  }
 
   if (counter < 8 && gameState === "RUNNING") {
     console.log("counterläuftsolangeunter8");
@@ -289,9 +309,14 @@ function gameStart() {
     $("#colorButton").show();
     $("#colorButton").prop("value", changeColorRow[counter]);
 
-    setTimeout(() => {
-      changeColor(changeColorRow);
-    }, timeInterval);
+    // if (myIndex == 0) {
+      setTimeout(() => {
+        changeColor(changeColorRow);
+      }, timeInterval);
+  
+    // }
+
+
   }
 
 }
@@ -312,8 +337,10 @@ function transferColor() {
   console.log("transfercolor");
   // Set the new colors for every client
   // Shuffle and send the color array to the client
+  if (myIndex == 0) {
   colorRow = shuffle(colorRow);
   socket.emit("serverEvent", { type: "colorSet", color: colorRow });
+  }
 }
 
 
