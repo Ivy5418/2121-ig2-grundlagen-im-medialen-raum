@@ -61,7 +61,7 @@ function clickOnColor(color) {
  */
 function changeColor(changeColorRow) {
   // Reset the game after all colors are displayed
-  if (counter === 6) {
+  if (counter === 7) {
     resetGame();
   }
 
