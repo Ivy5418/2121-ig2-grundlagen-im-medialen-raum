@@ -17,6 +17,7 @@ let intervalID;
 let counter = 0;
 let clickCounter = 0;
 
+
 function getMyColor() {
   switch (myIndex) {
     case 0:
@@ -63,6 +64,8 @@ function clickOnColor(color) {
  * @param {*} changeColorRow
  */
 function changeColor(changeColorRow) {
+  console.log("changeColor", counter, gameState);
+
   // Reset the game after all colors are displayed
   if (counter === 8) {
     resetGame();
@@ -73,7 +76,7 @@ function changeColor(changeColorRow) {
     resetGame();
   }*/
 
-  if (counter < 8) {
+  if (counter < 8 && gameState === "RUNNING") {
     counter++;
     $(".buttonviolet").hide();
     $(".buttonyellow").hide();
@@ -114,37 +117,15 @@ function transferColor() {
 }
 
 function handleStartClick() {
-  if (gameState === "RUNNING") {
-    return;
-  }
-  /** Prepare for game start */
-  // Resets the result card on game start
-  $(".resultCard").empty();
-  // Reset the counter on game start
-  counter = 0;
-
-  // Set the game state
-  gameState = "RUNNING";
-
-  // Get the current time interval Calculate
-  timeInterval = getCurrentTimeInterval();
-
-  // Hide the unused UI elements
-  $(".button1").hide();
-  $(".button2").hide();
-  $(".resultCardContainer").hide();
-  transferColor();
-
-  //socket.emit("serverEvent", { type: "gameStart" });
+ 
+  socket.emit("serverEvent", { type: "gameStart" });
 }
 
 function handleReadyClick() {
   // Player is ready event
   socket.emit("serverEvent", { type: "clickReady", data: { id: myID } });
 
-  //FIXME: Comment out now for testing purpose
-  // Hides the button after press
-  $(".button1").hide();
+
 
   //checkForReadiness();
 }
@@ -164,6 +145,10 @@ function checkForReadiness() {
 socket.on("serverEvent", (message) => {
   // Count if everyone is ready
   if (message.type == "clickReady") {
+      //FIXME: Comment out now for testing purpose
+    // Hides the button after press
+    $(".button1").hide();
+    
     clickCounter++;
     
     console.log(`PLAYER WITH ID: ${message.data.id} IS READY`);
@@ -227,6 +212,33 @@ function resetGame() {
 
   getPlayerTiles();
   handleGameResult();
+}
+
+function gameStart() {
+  if (gameState === "RUNNING") {
+    return;
+  }
+
+
+
+  /** Prepare for game start */
+  // Resets the result card on game start
+  $(".resultCard").empty();
+  // Reset the counter on game start
+  counter = 0;
+
+  // Set the game state
+  gameState = "RUNNING";
+
+  // Get the current time interval Calculate
+  timeInterval = getCurrentTimeInterval();
+
+  // Hide the unused UI elements
+  $(".button1").hide();
+  $(".button2").hide();
+  $(".resultCardContainer").hide();
+  transferColor();
+
 }
 
 /**
