@@ -27,6 +27,7 @@ function handleStartClick() {
 function handleReadyClick() {
   // Player is ready event
   $(".button1").hide();
+  $(".resultCard").hide();
   socket.emit("serverEvent", { type: "clickReady", data: { id: myID } });
   //checkForReadiness();
 }
