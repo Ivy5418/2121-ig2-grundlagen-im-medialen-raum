@@ -65,12 +65,12 @@ function changeColor(changeColorRow) {
     resetGame();
   }
 
-  if (gameState === "RUNNING" && counter != counterRightClicks) {
+ /* if (gameState === "RUNNING" && counter != counterRightClicks) {
     console.log("TIME ELAPSED");
     resetGame();
-  }
+  }*/
 
-  if (gameState === "RUNNING" && counter < 7) {
+  if (counter < 7) {
     counter++;
     $(".buttonviolet").hide();
     $(".buttonyellow").hide();
@@ -127,7 +127,7 @@ function handleStartClick() {
   $(".resultCardContainer").hide();
   transferColor();
 
-  socket.emit("serverEvent", { type: "gameStart" });
+  //socket.emit("serverEvent", { type: "gameStart" });
 }
 
 function handleReadyClick() {
@@ -138,13 +138,15 @@ function handleReadyClick() {
   // Hides the button after press
   $(".button1").hide();
 
-  checkForReadiness();
+  //checkForReadiness();
 }
 
 function checkForReadiness() {
-  if (clickCounter === 3) {
+  console.log(clickCounter)
+  if (clickCounter === 4) {
     console.log("READY TO START");
-    $(".button2").show();
+    if(myIndex == 0)
+      $(".button2").show();
   }
 }
 
@@ -155,6 +157,7 @@ socket.on("serverEvent", (message) => {
   // Count if everyone is ready
   if (message.type == "clickReady") {
     clickCounter++;
+    
     console.log(`PLAYER WITH ID: ${message.data.id} IS READY`);
     // Shows the start button if everyone is ready
     checkForReadiness();
