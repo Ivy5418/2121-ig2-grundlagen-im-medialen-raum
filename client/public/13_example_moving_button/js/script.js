@@ -61,7 +61,7 @@ function clickOnColor(color) {
  */
 function changeColor(changeColorRow) {
   // Reset the game after all colors are displayed
-  if (counter === 7) {
+  if (counter === 8) {
     resetGame();
   }
 
@@ -70,7 +70,7 @@ function changeColor(changeColorRow) {
     resetGame();
   }*/
 
-  if (counter < 7) {
+  if (counter < 8) {
     counter++;
     $(".buttonviolet").hide();
     $(".buttonyellow").hide();
@@ -189,7 +189,7 @@ socket.on("serverEvent", (message) => {
 function handleGameResult() {
   // Create a new div which gets deleted on reset later on
   $(".resultCardContainer").show();
-  if (counterRightClicks === 6) {
+  if (counterRightClicks === 8) {
     $(".resultCard").append(`<p id="resultText">YOU WON</p>`);
     $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`);
     // Count up the won rounds
