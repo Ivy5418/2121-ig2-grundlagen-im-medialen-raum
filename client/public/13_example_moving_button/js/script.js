@@ -155,6 +155,7 @@ function resetGame() {
   counter = 0;
 
   // Handle UI elements
+  $(".resultCard").show();
   $("#colorButton").hide();
   $(".buttonviolet").show();
   $(".buttonyellow").show();
