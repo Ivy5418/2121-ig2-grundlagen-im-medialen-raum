@@ -21,10 +21,12 @@ let clickCounter = 0;
 // User interaction --------------------------------------------------------------------------------------------
 
 function handleStartClick() {
+  console.log("handleStartClick");
   socket.emit("serverEvent", { type: "gameStart" });
 }
 
 function handleReadyClick() {
+  console.log("handleReadyClick");
   // Player is ready event
   $(".button1").hide();
   $(".resultCard").hide();
@@ -33,6 +35,7 @@ function handleReadyClick() {
 }
 
 function clickOnColor(color) {
+  console.log("clickOnColor");
  
   const myColor = getMyColor();
 
@@ -96,18 +99,19 @@ function clickOnColor(color) {
 
   // Changes the color if the game starts
   if (message.type == "colorSet") {
+    console.log("newchangecolorsend");
     changeColor(message.color);
   }
 
   // Changes the color if the game starts
   if (message.type == "gameStart") {
+    console.log("gamestartsend");
     gameStart();
   }
 
   // Add up the right Answerers
   if (message.type == "rightColor") {
     // Hide Button after correct press
-
     counterRightClicks++;
     console.log(`RIGHT COLOR NUMBER ${counterRightClicks}`);
   }
@@ -118,7 +122,7 @@ function clickOnColor(color) {
 
     // Game reset after wrong button press
     console.log("GAME RESET");
-    resetGame();
+    newLevel();
   }
 });
 
@@ -128,7 +132,7 @@ function clickOnColor(color) {
 
 function initGame() {
   gameState = "STOP";
-  console.log("resetGameStop");
+  console.log("initGame");
   clickCounter = 0;
   counter = 0;
   wonRounds = 0;
@@ -147,9 +151,9 @@ function initGame() {
 }
 
 
-function resetGame() {
+function newLevel() {
   gameState = "STOP";
-  console.log("resetGameStop");
+  console.log("newLevel");
   clickCounter = 0;
   counter = 0;
 
@@ -169,6 +173,7 @@ function resetGame() {
 
 // player preparation
 function getPlayerTiles() {
+  console.log("getplayertiles");
   switch (myIndex) {
     case 0:
       $(".buttonviolet").text("You");
@@ -197,7 +202,7 @@ function getPlayerTiles() {
 }
 
 function checkForReadiness() {
-  console.log(clickCounter)
+  console.log(clickCounter);
   if (clickCounter === 4) {
     console.log("READY TO START");
 
@@ -208,16 +213,19 @@ function checkForReadiness() {
 
 
 function handleGameResult() {
+  console.log("handlegameresult");
   // Create a new div which gets deleted on reset later on
   $(".resultCardContainer").show();
   if (counterRightClicks === 8) {
     $(".resultCard").append(`<p id="resultText">YOU WON</p>`);
     $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`);
+    console.log("gameresult:won");
     // Count up the won rounds
     wonRounds++;
   } else {
     $(".resultCard").append(`<p id="resultText">YOU LOST</p>`);
     $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`);
+    console.log("gameresult:lost");
     // Reset the won rounds
     wonRounds = 0;
   }
@@ -225,6 +233,7 @@ function handleGameResult() {
 
 
 function gameStart() {
+  console.log("gameStart");
   if (gameState === "RUNNING") {
     return;
   }
@@ -259,7 +268,8 @@ function gameStart() {
 
   // Reset the game after all colors are displayed
   if (counter === 8) {
-    resetGame();
+    console.log("counteristbei8");
+    newLevel();
   }
 
   /* if (gameState === "RUNNING" && counter != counterRightClicks) {
@@ -268,6 +278,7 @@ function gameStart() {
    }*/
 
   if (counter < 8 && gameState === "RUNNING") {
+    console.log("counterläuftsolangeunter8");
     counter++;
     $(".buttonviolet").hide();
     $(".buttonyellow").hide();
@@ -298,6 +309,7 @@ function getCurrentTimeInterval() {
 }
 
 function transferColor() {
+  console.log("transfercolor");
   // Set the new colors for every client
   // Shuffle and send the color array to the client
   colorRow = shuffle(colorRow);
@@ -307,6 +319,7 @@ function transferColor() {
 
 
 function getMyColor() {
+  console.log("getmycolor");
   switch (myIndex) {
     case 0:
       return "#534e8c";
