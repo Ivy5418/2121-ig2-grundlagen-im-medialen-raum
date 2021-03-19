@@ -91,9 +91,6 @@ function changeColor(changeColorRow) {
       changeColor(changeColorRow);
     }, timeInterval);
   }
-  else if (counter = 0) {
-    
-  }
 
 }
 
@@ -187,7 +184,6 @@ function handleGameResult() {
     $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`);
     // Count up the won rounds
     wonRounds++;
-    counterRightClicks = wonRounds;
   } else {
     $(".resultCard").append(`<p id="resultText">YOU LOST</p>`);
     $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`);
