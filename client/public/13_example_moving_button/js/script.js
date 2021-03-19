@@ -10,16 +10,7 @@ let counterRightClicks = 0;
 let wonRounds = 0;
 let timeInterval = 1000;
 
-let colorRow = [
-  "#534e8c",
-  "#e4ad27",
-  "#fb8d8f",
-  "#398b9d",
-  "#534e8c",
-  "#e4ad27",
-  "#fb8d8f",
-  "#398b9d",
-];
+let colorRow = ["#534e8c", "#e4ad27", "#fb8d8f", "#398b9d", "#534e8c", "#e4ad27", "#fb8d8f", "#398b9d"];
 
 let colors = document.getElementsByClassName("color");
 let intervalID;
@@ -197,16 +188,12 @@ function handleGameResult() {
   $(".resultCardContainer").show();
   if (counterRightClicks === 6) {
     $(".resultCard").append(`<p id="resultText">YOU WON</p>`);
-    $(".resultCard").append(
-      `<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`
-    );
+    $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`);
     // Count up the won rounds
     wonRounds++;
   } else {
     $(".resultCard").append(`<p id="resultText">YOU LOST</p>`);
-    $(".resultCard").append(
-      `<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`
-    );
+    $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${counterRightClicks}</p>`);
     // Reset the won rounds
     wonRounds = 0;
   }
@@ -245,6 +232,8 @@ socket.on("newUsersEvent", function (gmyID, gmyIndex, guserList) {
 
   getPlayerTiles();
 });
+
+//player
 
 function getPlayerTiles() {
   switch (myIndex) {
