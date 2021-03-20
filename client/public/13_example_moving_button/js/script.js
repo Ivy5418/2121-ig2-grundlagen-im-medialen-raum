@@ -223,7 +223,7 @@ function getPlayerTiles() {
 
 function checkForReadiness() {
   console.log(clickCounter);
-  if (clickCounter === 2) {
+  if (clickCounter === 4) {
     console.log("READY TO START");
 
     if (myIndex == 0)
@@ -237,14 +237,16 @@ function handleGameResult() {
   // Create a new div which gets deleted on reset later on
   $(".resultCardContainer").show();
   if (counterRightClicks === 8) {
-    $(".resultCard").append(`<p id="resultText">YOU WON</p>`);
-    $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${wonRounds}</p>`);
+    $(".resultCard").css("background-color", "#629559");
+    $(".resultCard").append(`<p id="resultText">Your Team made it!</p>`);
+    $(".resultCard").append(`<p id="resultText">Level Result ${wonRounds}</p>`);
     console.log("gameresult:won");
     // Count up the won rounds
     wonRounds++;
   } else {
-    $(".resultCard").append(`<p id="resultText">YOU LOST</p>`);
-    $(".resultCard").append(`<p id="resultText">YOUR SCORE WAS ${wonRounds}</p>`);
+    $(".resultCard").css("background-color", "#B64047");
+    $(".resultCard").append(`<p id="resultText">Your Team lost</p>`);
+    $(".resultCard").append(`<p id="resultText">Level Result ${wonRounds}</p>`);
     console.log("gameresult:lost");
     // Reset the won rounds
     wonRounds = 0;

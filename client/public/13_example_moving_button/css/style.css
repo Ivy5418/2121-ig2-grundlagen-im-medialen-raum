@@ -26,6 +26,9 @@ body {
   width: 300px;
   height: 200px;
   background-color: white;
+  text-align: center;
+  line-height: 50px;
+  font-family: Helvetica;
 }
 
 .button1 {
@@ -40,6 +43,7 @@ body {
   color: white;
   text-align: center;
   line-height: 50px;
+  font-size: 10;
   font-family: Helvetica;
   cursor: pointer;
 }
@@ -69,7 +73,7 @@ body {
   top: 0;
   color: white;
   text-align: center;
-  line-height: 200px;
+  line-height: 50vh ;
   font-family: Helvetica;
 }
 
@@ -82,7 +86,7 @@ body {
   top: 50%;
   color: white;
   text-align: center;
-  line-height: 200px;
+  line-height: 50vh;
   font-family: Helvetica;
 }
 
@@ -95,7 +99,7 @@ body {
   top: 0;
   color: white;
   text-align: center;
-  line-height: 200px;
+  line-height: 50vh;
   font-family: Helvetica;
 }
 
@@ -108,6 +112,6 @@ body {
   top: 50%;
   color: white;
   text-align: center;
-  line-height: 200px;
+  line-height: 50vh;
   font-family: Helvetica;
 }
