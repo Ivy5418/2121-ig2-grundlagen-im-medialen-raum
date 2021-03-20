@@ -16,6 +16,7 @@ let colors = document.getElementsByClassName("color");
 let intervalID;
 let counter = 0;
 let clickCounter = 0;
+let myLastColorClick = -1; // remember which color index has been clicked by me
 
 
 // User interaction --------------------------------------------------------------------------------------------
@@ -40,15 +41,15 @@ function clickOnColor(color) {
  
   const myColor = getMyColor();
 
-  if (myColor === color) {
+  if (myColor === color && myLastColorClick < counter) {
     console.log("RIGHT");
-
+    myLastColorClick = counter;
     // Emit the correct button press
     socket.emit("serverEvent", { type: "rightColor" });
 
-  } else if (myColor != color) {
+  } else if (myColor != color && myLastColorClick < counter) {
     console.log("WRONG COLOR");
-
+    myLastColorClick = counter;
     // Emit the wrong button press
     socket.emit("serverEvent", { type: "wrongColor" });
   }
@@ -331,7 +332,7 @@ function gameStart() {
 function getCurrentTimeInterval() {
   console.log(wonRounds);
   if (wonRounds === 0) {
-    return (timeInterval = 1000);
+    return (timeInterval = 4000);
   } else return timeInterval / wonRounds;
 }
 
