@@ -240,14 +240,14 @@ function handleGameResult() {
   if (counterRightClicks === 8) {
     $(".resultCard").css("background-color", "#629559");
     $(".resultCard").append(`<p id="resultText">Your Team made it!</p>`);
-    $(".resultCard").append(`<p id="resultText">Level Result ${wonRounds}</p>`);
+    $(".resultCard").append(`<p id="resultText">Level Result ${wonRounds +1}</p>`);
     console.log("gameresult:won");
     // Count up the won rounds
     wonRounds++;
   } else {
     $(".resultCard").css("background-color", "#B64047");
     $(".resultCard").append(`<p id="resultText">Your Team lost</p>`);
-    $(".resultCard").append(`<p id="resultText">Level Result ${wonRounds}</p>`);
+    $(".resultCard").append(`<p id="resultText">Level Result ${wonRounds +1}</p>`);
     console.log("gameresult:lost");
     // Reset the won rounds
     wonRounds = 0;
