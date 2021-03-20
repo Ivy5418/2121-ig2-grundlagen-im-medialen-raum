@@ -332,7 +332,7 @@ function gameStart() {
 function getCurrentTimeInterval() {
   console.log(wonRounds);
   if (wonRounds === 0) {
-    return (timeInterval = 4000);
+    return (timeInterval = 2000);
   } else return timeInterval / wonRounds;
 }
 

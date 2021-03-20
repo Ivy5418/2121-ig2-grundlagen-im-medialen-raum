@@ -23,11 +23,12 @@ body {
 
 .resultCard {
   z-index: 2;
-  width: 300px;
+  width: 200px;
   height: 200px;
   background-color: white;
+  color: white;
   text-align: center;
-  line-height: 50px;
+  line-height: 30px;
   font-family: Helvetica;
 }
 
@@ -43,7 +44,6 @@ body {
   color: white;
   text-align: center;
   line-height: 50px;
-  font-size: 10;
   font-family: Helvetica;
   cursor: pointer;
 }
