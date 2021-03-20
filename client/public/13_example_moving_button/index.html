@@ -7,11 +7,13 @@
     <script src="lib/jquery-3.5.1.js"></script>
     <script>
       function mouseOver() {
-        document.getElementById("button1").style.color = "red";
+        document.getElementById("button1").style.backgroundColor = "black";
+        document.getElementById("button2").style.backgroundColor = "black";
       }
       
       function mouseOut() {
-        document.getElementById("button1").style.color = "white";
+        document.getElementById("button1").style.backgroundColor = "#2f2f2f";
+        document.getElementById("button2").style.backgroundColor = "#2f2f2f";
       }
       </script>
   </head>
@@ -23,6 +25,7 @@
         class="button2"
         id="button2"
         onclick="handleStartClick()"
+        onmouseover="mouseOver()" onmouseout="mouseOut()"
         style="display: none"
       >
         Start
