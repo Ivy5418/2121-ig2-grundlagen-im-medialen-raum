@@ -276,20 +276,19 @@ function getPlayerTiles() {
 
 /**
  * Shuffles array in place.
- * @param {Array} a items An array containing the items.
+ * @param {Array} array items An array containing the items.
  */
-function shuffle(a) {
+function shuffle(array) {
   var j, x, i;
-  for (i = a.length - 1; i > 0; i--) {
+  for (i = array.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
-    x = a[i];
-
-    if (a[i] === a[j]) {
-      a[i] = a[j + 1];
+    x = array[i];
+    if (array[i] === array[j]) {
+      array[i] = array[j + 1];
     } else {
-      a[i] = a[j];
+      array[i] = array[j];
     }
-    a[j] = x;
+    array[j] = x;
   }
-  return a;
+  return array;
 }
