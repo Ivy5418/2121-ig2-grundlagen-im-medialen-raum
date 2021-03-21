@@ -279,14 +279,14 @@ function getPlayerTiles() {
  * @param {Array} array items An array containing the items.
  */
 function shuffle(array) {
-  var j, x, i;
-  for (i = array.length - 1; i > 0; i--) {
-    j = Math.floor(Math.random() * (i + 1));
-    x = array[i];
-    if (array[i] === array[j]) {
-      array[i] = array[j + 1];
+  var j, x, index;
+  for (index = array.length - 1; index > 0; index--) {
+    j = Math.floor(Math.random() * (index + 1));
+    x = array[index];
+    if (array[index] === array[j]) {
+      array[index] = array[j + 1];
     } else {
-      array[i] = array[j];
+      array[index] = array[j];
     }
     array[j] = x;
   }
