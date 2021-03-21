@@ -1,3 +1,11 @@
+/**
+ * CURRENT TODO:´s and FIXME:´s
+ *
+ * FIXME: After the time elapse if statement is triggered the game gets reset twice (Game should only rest once)
+ *
+ *
+ */
+
 // Connecting to server. Don't touch this :-)
 let socket = io();
 
@@ -49,12 +57,10 @@ function clickOnColor(color) {
   const myColor = getMyColor();
 
   if (myColor === color && myLastColorClick < counter) {
-    console.log("RIGHT");
     myLastColorClick = counter;
     // Emit the correct button press
     socket.emit("serverEvent", { type: "rightColor" });
   } else if (myColor != color && myLastColorClick < counter) {
-    console.log("WRONG COLOR");
     myLastColorClick = counter;
     // Emit the wrong button press
     socket.emit("serverEvent", { type: "wrongColor" });
@@ -84,33 +90,32 @@ socket.on("newUsersEvent", function (gmyID, gmyIndex, guserList) {
  * Listen to all server events
  */
 socket.on("serverEvent", (message) => {
+  console.log(
+    `%cNEW SERVER EVENT FROM TYPE: ${message.type}  TRANSFER DATA: ${
+      message.data ?? "NO DATA IN CURRENT REQUEST"
+    }`,
+    "color:blue"
+  );
+
   if (message.type == "initGame") {
     // Game reset
-    console.log("GAME INIT");
     initGame();
   }
 
   // Count if everyone is ready
   if (message.type == "clickReady") {
-    //FIXME: Comment out now for testing purpose
-    // Hides the button after press
-
     clickCounter++;
-
-    console.log(`PLAYER WITH ID: ${message.data.id} IS READY`);
     // Shows the start button if everyone is ready
     checkForReadiness();
   }
 
   // Changes the color if the game starts
   if (message.type == "colorSet") {
-    console.log("newchangecolorsend");
-    changeColor(message.color);
+    changeColor(message.data);
   }
 
   // Starts the game
   if (message.type == "gameStart") {
-    console.log("gamestartsend");
     gameStart();
   }
 
@@ -124,10 +129,17 @@ socket.on("serverEvent", (message) => {
   if (message.type == "wrongColor") {
     // Hide Button after wrong press
     $("#colorButton").hide();
-
     // Game reset after wrong button press
-    console.log("GAME OVER");
     gameOver();
+  }
+
+  if (message.type == "resetGame") {
+    // Hide Button after wrong press
+    $("#colorButton").hide();
+    // Game reset after event call
+    if (gameState === "RUNNING") {
+      gameOver();
+    }
   }
 });
 
@@ -153,31 +165,12 @@ function initGame() {
   getPlayerTiles();
 }
 
-function newLevel() {
-  gameState = "STOP";
-  console.log("newLevel");
-  clickCounter = 0;
-  counter = 0;
-
-  // Handle UI elements
-  $(".resultCard").show();
-  $("#colorButton").hide();
-  $(".buttonviolet").show();
-  $(".buttonyellow").show();
-  $(".buttonpink").show();
-  $(".buttonblue").show();
-  $(".button1").show();
-
-  getPlayerTiles();
-  handleGameResult();
-}
-
 function gameOver() {
+  console.log(`%cGAME OVER`, "color:red");
+
   gameState = "STOP";
-  console.log("gameOver");
   clickCounter = 0;
   counter = 0;
-
   // Handle UI elements
   $(".resultCard").show();
   $("#colorButton").hide();
@@ -193,7 +186,6 @@ function gameOver() {
 
 // player preparation
 function getPlayerTiles() {
-  console.log("getplayertiles");
   switch (myIndex) {
     case 0:
       $(".buttonviolet").text("You");
@@ -223,7 +215,7 @@ function getPlayerTiles() {
 
 function checkForReadiness() {
   console.log(clickCounter);
-  if (clickCounter === 4) {
+  if (clickCounter === 2) {
     console.log("READY TO START");
 
     if (myIndex == 0) $(".button2").show();
@@ -231,7 +223,6 @@ function checkForReadiness() {
 }
 
 function handleGameResult() {
-  console.log("handlegameresult");
   // Create a new div which gets deleted on reset later on
   $(".resultCardContainer").show();
   if (counterRightClicks === 8) {
@@ -240,7 +231,6 @@ function handleGameResult() {
     $(".resultCard").append(
       `<p id="resultText">Level Result ${wonRounds + 1}</p>`
     );
-    console.log("gameresult:won");
     // Count up the won rounds
     wonRounds++;
   } else {
@@ -249,14 +239,13 @@ function handleGameResult() {
     $(".resultCard").append(
       `<p id="resultText">Level Result ${wonRounds + 1}</p>`
     );
-    console.log("gameresult:lost");
     // Reset the won rounds
     wonRounds = 0;
   }
 }
 
 function gameStart() {
-  console.log("gameStart");
+  console.log(`%cGAME START`, "color:green");
   if (gameState === "RUNNING") {
     return;
   }
@@ -286,21 +275,19 @@ function gameStart() {
  * @param {*} changeColorRow
  */
 function changeColor(changeColorRow) {
-  console.log("changeColor", counter, gameState);
-
   // Reset the game after all colors are displayed
   if (counter === 8) {
-    console.log("counteristbei8");
-    newLevel();
+    socket.emit("serverEvent", { type: "resetGame" });
+    return;
   }
 
-  //  if (gameState === "RUNNING" && counter != counterRightClicks) {
-  //    console.log("TIME ELAPSED");
-  //    gameOver();
-  //  }
+  // Game Stops if no one presses the color
+  if (gameState === "RUNNING" && counter != counterRightClicks) {
+    socket.emit("serverEvent", { type: "resetGame" });
+    return;
+  }
 
   if (counter < 8 && gameState === "RUNNING") {
-    console.log("counterläuftsolangeunter8");
     counter++;
     $(".buttonviolet").hide();
     $(".buttonyellow").hide();
@@ -325,19 +312,17 @@ function changeColor(changeColorRow) {
  * @returns
  */
 function getCurrentTimeInterval() {
-  console.log(wonRounds);
   if (wonRounds === 0) {
     return (timeInterval = 2000);
   } else return timeInterval / wonRounds;
 }
 
 function transferColor() {
-  console.log("transfercolor");
   // Set the new colors for every client
   // Shuffle and send the color array to the client
   if (myIndex == 0) {
     colorRow = shuffle(colorRow);
-    socket.emit("serverEvent", { type: "colorSet", color: colorRow });
+    socket.emit("serverEvent", { type: "colorSet", data: colorRow });
   }
 }
 
