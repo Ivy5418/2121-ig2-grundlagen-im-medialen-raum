@@ -12,12 +12,12 @@ let timeInterval = 1000;
 
 let colorRow = [
   "#534e8c",
-  "#e4ad27",
-  "#fb8d8f",
-  "#398b9d",
   "#534e8c",
   "#e4ad27",
+  "#e4ad27",
   "#fb8d8f",
+  "#fb8d8f",
+  "#398b9d",
   "#398b9d",
 ];
 
@@ -145,13 +145,13 @@ function handleReadyClick() {
 
   //FIXME: Comment out now for testing purpose
   // Hides the button after press
-  $(".button1").hide();
+  //$(".button1").hide();
 
   checkForReadiness();
 }
 
 function checkForReadiness() {
-  if (clickCounter === 3) {
+  if (clickCounter === 4) {
     console.log("READY TO START");
     $(".button2").show();
   }
@@ -174,7 +174,7 @@ socket.on("serverEvent", (message) => {
     changeColor(message.color);
   }
 
-  // Changes the color if the game starts
+  // Starts the game
   if (message.type == "gameStart") {
     gameStart();
   }
@@ -193,7 +193,7 @@ socket.on("serverEvent", (message) => {
 });
 
 function handleGameResult() {
-  // Create a new div which gets deleted on reset later on
+  // Creates Content based on the game Result and append it to an existing div
   $(".resultCardContainer").show();
   if (counterRightClicks === 6) {
     $(".resultCard").append(`<p id="resultText">YOU WON</p>`);
@@ -283,7 +283,12 @@ function shuffle(a) {
   for (i = a.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
     x = a[i];
-    a[i] = a[j];
+
+    if (a[i] === a[j]) {
+      a[i] = a[j + 1];
+    } else {
+      a[i] = a[j];
+    }
     a[j] = x;
   }
   return a;
