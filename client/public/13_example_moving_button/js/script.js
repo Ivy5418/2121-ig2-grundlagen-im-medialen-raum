@@ -1,7 +1,7 @@
 /**
  * CURRENT TODO:´s and FIXME:´s
  *
- * FIXME: After the time elapse if statement is triggered the game gets reset twice (Game should only rest once)
+ * FIXME: After the time elapse if statement the the game reset gets  triggered twice (Game should only rest once => Currently fixed with an if statement to check for game state)
  *
  *
  */
