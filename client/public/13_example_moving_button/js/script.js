@@ -17,17 +17,9 @@ let gameState = "STOP";
 let counterRightClicks = 0;
 let wonRounds = 0;
 let timeInterval = 1000;
+let totalClicks = 0;
 
-let colorRow = [
-  "#534e8c",
-  "#e4ad27",
-  "#fb8d8f",
-  "#398b9d",
-  "#534e8c",
-  "#e4ad27",
-  "#fb8d8f",
-  "#398b9d",
-];
+let colorRow = ["#534e8c", "#e4ad27", "#fb8d8f", "#398b9d", "#534e8c", "#e4ad27", "#fb8d8f", "#398b9d"];
 
 let colors = document.getElementsByClassName("color");
 let intervalID;
@@ -90,12 +82,7 @@ socket.on("newUsersEvent", function (gmyID, gmyIndex, guserList) {
  * Listen to all server events
  */
 socket.on("serverEvent", (message) => {
-  console.log(
-    `%cNEW SERVER EVENT FROM TYPE: ${message.type}  TRANSFER DATA: ${
-      message.data ?? "NO DATA IN CURRENT REQUEST"
-    }`,
-    "color:blue"
-  );
+  console.log(`%cNEW SERVER EVENT FROM TYPE: ${message.type}  TRANSFER DATA: ${message.data ?? "NO DATA IN CURRENT REQUEST"}`, "color:blue");
 
   if (message.type == "initGame") {
     // Game reset
@@ -127,15 +114,11 @@ socket.on("serverEvent", (message) => {
   }
 
   if (message.type == "wrongColor") {
-    // Hide Button after wrong press
-    $("#colorButton").hide();
     // Game reset after wrong button press
     gameOver();
   }
 
   if (message.type == "resetGame") {
-    // Hide Button after wrong press
-    $("#colorButton").hide();
     // Game reset after event call
     if (gameState === "RUNNING") {
       gameOver();
@@ -153,6 +136,7 @@ function initGame() {
   wonRounds = 0;
   timeInterval = 1000;
   counterRightClicks = 0;
+  totalClicks = 0;
 
   // Handle UI elements
   $("#colorButton").hide();
@@ -171,6 +155,7 @@ function gameOver() {
   gameState = "STOP";
   clickCounter = 0;
   counter = 0;
+  counterRightClicks = 0;
   // Handle UI elements
   $(".resultCard").show();
   $("#colorButton").hide();
@@ -215,7 +200,7 @@ function getPlayerTiles() {
 
 function checkForReadiness() {
   console.log(clickCounter);
-  if (clickCounter === 2) {
+  if (clickCounter === 4) {
     console.log("READY TO START");
 
     if (myIndex == 0) $(".button2").show();
@@ -226,21 +211,22 @@ function handleGameResult() {
   // Create a new div which gets deleted on reset later on
   $(".resultCardContainer").show();
   if (counterRightClicks === 8) {
+    // Count up the won rounds and right clicks
+    wonRounds++;
+    totalClicks += counterRightClicks;
+    counterRightClicks = 0;
+
     $(".resultCard").css("background-color", "#629559");
     $(".resultCard").append(`<p id="resultText">Your Team made it!</p>`);
-    $(".resultCard").append(
-      `<p id="resultText">Level Result ${wonRounds + 1}</p>`
-    );
-    // Count up the won rounds
-    wonRounds++;
+    $(".resultCard").append(`<p id="resultText">Level Result ${wonRounds + 1}</p>`);
   } else {
+    // Reset the won rounds and total clicks
+    wonRounds = 0;
+    totalClicks = 0;
+
     $(".resultCard").css("background-color", "#B64047");
     $(".resultCard").append(`<p id="resultText">Your Team lost</p>`);
-    $(".resultCard").append(
-      `<p id="resultText">Level Result ${wonRounds + 1}</p>`
-    );
-    // Reset the won rounds
-    wonRounds = 0;
+    $(".resultCard").append(`<p id="resultText">Level Result ${wonRounds + 1}</p>`);
   }
 }
 
@@ -266,7 +252,6 @@ function gameStart() {
   $(".button1").hide();
   $(".button2").hide();
   $(".resultCardContainer").hide();
-
   transferColor();
 }
 
@@ -281,13 +266,14 @@ function changeColor(changeColorRow) {
     return;
   }
 
-  // Game Stops if no one presses the color
-  if (gameState === "RUNNING" && counter != counterRightClicks) {
-    socket.emit("serverEvent", { type: "resetGame" });
-    return;
-  }
+  // // Game Stops if no one presses the color
+  // if (gameState === "RUNNING" && counter != counterRightClicks) {
+  //   socket.emit("serverEvent", { type: "resetGame" });
+  //   return;
+  // }
 
   if (counter < 8 && gameState === "RUNNING") {
+    console.log(counter);
     counter++;
     $(".buttonviolet").hide();
     $(".buttonyellow").hide();
@@ -302,7 +288,6 @@ function changeColor(changeColorRow) {
     setTimeout(() => {
       changeColor(changeColorRow);
     }, timeInterval);
-
     // }
   }
 }

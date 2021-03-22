@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./client.js 3001 teamplayer/Lennister",
-    "start2": "node ./client.js 3002 teamplayer/Lennister",
+    "start1": "node ./client.js 3002 teamplayer/Lennister",
+    "start2": "node ./client.js 3003 teamplayer/Lennister",
+    "start3": "node ./client.js 3004 teamplayer/Lennister",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
